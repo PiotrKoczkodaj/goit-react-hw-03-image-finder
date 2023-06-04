@@ -8,8 +8,8 @@ export class ImageGalleryItem extends Component {
     return (
       <>
         {state.arrayOfImages.map(image => (
-          <li key={image.id} className={styles.ImageGalleryItem}>
-            <img className={styles.ImageGalleryItem} src={image.largeImageURL} alt={image.tags} />
+          <li key={image.id} className={styles.item}>
+            <img className={styles.image} src={image.largeImageURL} alt={image.tags} />
           </li>
         ))}
       </>

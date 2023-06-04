@@ -10,8 +10,8 @@ import { fetchData } from './Api';
 export class App extends Component {
   state = {
     arrayOfImages: [],
-    page: 4,
-    quantityPages: 5,
+    page: 1,
+    quantityPages: 12,
   };
 
   render() {
@@ -27,7 +27,10 @@ export class App extends Component {
     };
 
     return (
-      <div>
+      <div style={{display: 'grid',
+          gridTemplateColumns: '1fr',
+          gridGap: '16px',
+          paddingBottom: '24px',}}>
         <Searchbar submit={handleSubmit} />
         <ImageGallery>
           <ImageGalleryItem state={this.state} />
