@@ -10,28 +10,34 @@ import { fetchData } from "./Api";
 export class App extends Component {
 
   state = {
-  images: []
+    arrayOfImages: [],
+    page: 4,
+    quantityPages:5
   };
 
   render() {
     const handleSubmit = (e) => {
       e.preventDefault();
       const inputValue = e.target[1].value;
-      fetchData(inputValue).then(resp => {  
-        return resp.data.hits
+      let page = this.state.page;
+      let quantityPages = this.state.quantityPages
+      fetchData(inputValue, page, quantityPages).then(resp => {  
+        console.log(resp)
+        this.setState({ arrayOfImages:[...resp.data.hits]});
       })
-     
-      this.setState({ images:['d']});
+    
+      
+      
     };
 
-    console.log(this.state)
+
     return (
     <div>
-        <Searchbar submit={handleSubmit } />
+        <Searchbar submit={handleSubmit}  />
         <ImageGallery>
-          <ImageGalleryItem/>
+          <ImageGalleryItem state={ this.state}/>
         </ImageGallery>
-        <Button></Button>
+        {this.state.arrayOfImages.length===0?null:(<Button/>)}
         <Loader />
         <Modal />
       
