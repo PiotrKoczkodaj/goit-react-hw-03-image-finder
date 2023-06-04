@@ -4,8 +4,8 @@ export class Modal extends Component{
 
     render() {
         return (
-        <div class="overlay">
-  <div class="modal">
+        <div className="overlay">
+  <div className="modal">
     <img src="" alt="" />
   </div>
 </div>

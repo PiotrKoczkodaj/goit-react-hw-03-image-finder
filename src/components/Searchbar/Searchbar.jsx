@@ -2,15 +2,17 @@ import { Component } from "react";
 
 export class Searchbar extends Component{
 
-    render() {
+  render() {
+     const {submit}=this.props
         return (
             <header className="searchbar">
-  <form className="form">
-    <button type="submit" className="button">
+  <form className="form" onSubmit={submit}>
+    <button type="submit" className="button" >
       <span className="button-label">Search</span>
     </button>
 
-    <input
+              <input
+                
       className="input"
       type="text"
       autoComplete="off"
