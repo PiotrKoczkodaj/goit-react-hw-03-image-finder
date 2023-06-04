@@ -1,4 +1,5 @@
 import { Component } from 'react';
+import styles from './ImageGalleryItem.module.css';
 
 export class ImageGalleryItem extends Component {
   render() {
@@ -7,8 +8,8 @@ export class ImageGalleryItem extends Component {
     return (
       <>
         {state.arrayOfImages.map(image => (
-          <li key={image.id} className="gallery-item">
-            <img src={image.largeImageURL} alt={image.tags} />
+          <li key={image.id} className={styles.ImageGalleryItem}>
+            <img className={styles.ImageGalleryItem} src={image.largeImageURL} alt={image.tags} />
           </li>
         ))}
       </>
