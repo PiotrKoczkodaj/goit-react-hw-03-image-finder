@@ -12,8 +12,14 @@ export class App extends Component {
     arrayOfImages: [],
     page: 1,
     quantityPages: 12,
+    loading:true
   };
-
+  componentDidMount(){
+    setTimeout(() => {
+      this.setState({loading:false})
+    },3000)
+   
+}
   render() {
     const handleSubmit = e => {
       e.preventDefault();
@@ -36,7 +42,7 @@ export class App extends Component {
           <ImageGalleryItem state={this.state} />
         </ImageGallery>
         {this.state.arrayOfImages.length === 0 ? null : <Button />}
-        <Loader />
+        <Loader loading={this.state.loading } />
         <Modal />
       </div>
     );

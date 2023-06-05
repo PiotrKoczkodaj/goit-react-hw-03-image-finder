@@ -1,9 +1,9 @@
-import { Component } from "react";
+import { Component } from 'react';
 
-export class Loader extends Component{
-    render() {
-        return (
-            <p>LOADER</p>
-        )
-    }
+export class Loader extends Component {
+  render() {
+    const { loading } = this.props;
+    console.log(loading);
+    return <>{loading ? <p>Loading...</p> : <p>Loaded</p>}</>;
+  }
 }

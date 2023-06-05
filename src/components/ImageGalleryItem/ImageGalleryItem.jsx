@@ -4,7 +4,7 @@ import styles from './ImageGalleryItem.module.css';
 export class ImageGalleryItem extends Component {
   render() {
     const { state } = this.props;
-    console.log(state);
+    
     return (
       <>
         {state.arrayOfImages.map(image => (
