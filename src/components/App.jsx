@@ -14,6 +14,9 @@ export class App extends Component {
     quantityElements: 12,
     loading: true,
     inputValuee: '',
+    open: false,
+    ImageSrcToModal:''
+   
   };
   componentDidMount() {
     setTimeout(() => {
@@ -49,8 +52,13 @@ export class App extends Component {
       });
     };
 
+    const foo = () => {
+      console.log('df')
+ 
+}
+
     return (
-      <div
+      <div 
         style={{
           display: 'grid',
           gridTemplateColumns: '1fr',
@@ -59,14 +67,15 @@ export class App extends Component {
         }}
       >
         <Searchbar submit={handleSubmit} inputValue={settingInputValue} />
-        <ImageGallery>
-          <ImageGalleryItem state={this.state} />
-        </ImageGallery>
+        <ImageGallery >
+          <ImageGalleryItem state={this.state} fonag={foo}/> 
+        </ImageGallery >
         {this.state.arrayOfImages.length === 0 ? null : (
           <Button state={this.state} pagination={pagination} />
         )}
         <Loader loading={this.state.loading} />
-        <Modal />
+        {!this.state.open?null:(<Modal state={ this.state}/>)} 
+        
       </div>
     );
   }
