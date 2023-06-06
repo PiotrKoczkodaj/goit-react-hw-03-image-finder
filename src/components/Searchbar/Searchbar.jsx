@@ -4,7 +4,7 @@ import styles from './Searchbar.module.css';
 export class Searchbar extends Component{
 
   render() {
-     const {submit}=this.props
+     const {submit,inputValue}=this.props
         return (
             <header className={styles.Searchbar}>
   <form className={styles.form} onSubmit={submit}>
@@ -13,7 +13,7 @@ export class Searchbar extends Component{
     </button>
 
               <input
-                
+                onChange={inputValue}
       className={styles.input}
       type="text"
       autoComplete="off"
