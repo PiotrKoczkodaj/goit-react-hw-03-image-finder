@@ -5,7 +5,7 @@ import styles from './Modal.module.css';
 
 export class Modal extends Component {
   render() {
-    const { state } = this.props;
+    
     return (
      
       
