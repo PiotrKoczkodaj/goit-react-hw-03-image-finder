@@ -15,8 +15,8 @@ export class App extends Component {
     loading: true,
     inputValuee: '',
     open: false,
-    ImageSrcToModal:''
-   
+    imageSrcToModal: '',
+    tagsImageToModal: '',
   };
   componentDidMount() {
     setTimeout(() => {
@@ -37,8 +37,11 @@ export class App extends Component {
       let page = this.state.page;
       let quantityElements = this.state.quantityElements;
       fetchData(inputValue, page, quantityElements).then(resp => {
-        console.log(resp);
+        if (inputValue === '') {
+          return null
+        }
         this.setState({ arrayOfImages: [...resp.data.hits] });
+        
       });
     };
 
@@ -52,13 +55,16 @@ export class App extends Component {
       });
     };
 
-    const foo = () => {
-      console.log('df')
- 
-}
+    const modalOpen = e => {
+      this.setState({
+        imageSrcToModal: e.target.src,
+        tagsImageToModal: e.target.alt,
+        open: true,
+      });
+    };
 
     return (
-      <div 
+      <div
         style={{
           display: 'grid',
           gridTemplateColumns: '1fr',
@@ -67,15 +73,16 @@ export class App extends Component {
         }}
       >
         <Searchbar submit={handleSubmit} inputValue={settingInputValue} />
-        <ImageGallery >
-          <ImageGalleryItem state={this.state} fonag={foo}/> 
-        </ImageGallery >
+        <ImageGallery>
+          <ImageGalleryItem state={this.state} modalOpen={modalOpen} />
+        </ImageGallery>
         {this.state.arrayOfImages.length === 0 ? null : (
           <Button state={this.state} pagination={pagination} />
         )}
         <Loader loading={this.state.loading} />
-        {!this.state.open?null:(<Modal state={ this.state}/>)} 
-        
+        {!this.state.open ? null : (
+          <Modal state={this.state} source={modalOpen} />
+        )}
       </div>
     );
   }
