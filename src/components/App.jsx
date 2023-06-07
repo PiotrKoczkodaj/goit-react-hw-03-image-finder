@@ -19,9 +19,7 @@ export class App extends Component {
     tagsImageToModal: '',
   };
 
-  componentDidMount() {
-    
-  }
+  
   componentWillUnmount() {
     document.addEventListener('keyup', e => {
       if (e.key === 'Escape') {
