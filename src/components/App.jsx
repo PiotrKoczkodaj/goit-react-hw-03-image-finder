@@ -12,7 +12,7 @@ export class App extends Component {
     arrayOfImages: [],
     page: 1,
     quantityElements: 12,
-    loading: true,
+    loading: false,
     inputValuee: '',
     open: false,
     imageSrcToModal: '',
@@ -20,9 +20,7 @@ export class App extends Component {
   };
 
   componentDidMount() {
-    setTimeout(() => {
-      this.setState({ loading: false });
-    }, 1000);
+    
   }
   componentWillUnmount() {
     document.addEventListener('keyup', e => {
@@ -50,7 +48,12 @@ export class App extends Component {
       }
       this.setState({ arrayOfImages: [...resp.data.hits] });
     });
+    
+      this.setState({ loading: true });
+    
+    setTimeout(() => {this.setState({loading:false})}, 500);
   };
+  
   pagination = () => {
     let inputValue = this.state.inputValuee;
     let page = this.state.page;
