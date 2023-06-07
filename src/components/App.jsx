@@ -6,7 +6,6 @@ import { Button } from './Button/Button';
 import { Loader } from './Loader/Loader';
 import { Modal } from './Modal/Modal';
 import { fetchData } from './Api';
-import { prettyDOM } from '@testing-library/react';
 
 export class App extends Component {
   state = {
@@ -23,7 +22,7 @@ export class App extends Component {
   componentWillUnmount() {
     document.addEventListener('keyup', e => {
       if (e.key === 'Escape') {
-        this.setState({ open: false });
+        this.setState({ open: true });
       }
     });
   }
@@ -76,8 +75,7 @@ export class App extends Component {
       open: true,
     });
   };
-  modalClose = e => {
-    console.log(e);
+  modalClose =() => {
     this.setState({ open: false });
   };
   render() {
