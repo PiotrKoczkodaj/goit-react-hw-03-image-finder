@@ -10,7 +10,7 @@ export class Modal extends Component {
     return (
      
       
-      <div onKeyDown={(e)=>{console.log(e)}} onClick={modalClose} className={styles.Overlay}>
+      <div onClick={modalClose} className={styles.Overlay}>
         
           <div className={styles.Modal}>
     <img src={state.imageSrcToModal} alt={state.tagsImagetoModal} />

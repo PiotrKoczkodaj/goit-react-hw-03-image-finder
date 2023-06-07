@@ -6,6 +6,7 @@ import { Button } from './Button/Button';
 import { Loader } from './Loader/Loader';
 import { Modal } from './Modal/Modal';
 import { fetchData } from './Api';
+import { prettyDOM } from '@testing-library/react';
 
 export class App extends Component {
   state = {
@@ -19,7 +20,6 @@ export class App extends Component {
     tagsImageToModal: '',
   };
 
-  
   componentWillUnmount() {
     document.addEventListener('keyup', e => {
       if (e.key === 'Escape') {
@@ -46,22 +46,26 @@ export class App extends Component {
       }
       this.setState({ arrayOfImages: [...resp.data.hits] });
     });
-    
-      this.setState({ loading: true });
-    
-    setTimeout(() => {this.setState({loading:false})}, 500);
+
+    this.setState({ loading: true });
+
+    setTimeout(() => {
+      this.setState({ loading: false });
+    }, 500);
   };
-  
+
   pagination = () => {
+    
     let inputValue = this.state.inputValuee;
     let page = this.state.page;
     let quantityElements = this.state.quantityElements;
-    fetchData(inputValue, page, quantityElements).then(resp => {
-      this.setState({ quantityElements: this.state.quantityElements + 12 });
-      
-      this.setState({ arrayOfImages: [...resp.data.hits] });
+    this.setState({ quantityElements: quantityElements + 12 });
+    this.setState(prevState => {
+      quantityElements = prevState.quantityElements;
+      fetchData(inputValue, page, quantityElements).then(resp => {
+        this.setState({ arrayOfImages: [...resp.data.hits] });
+      });
     });
-    
   };
   modalOpen = e => {
     this.setState({
