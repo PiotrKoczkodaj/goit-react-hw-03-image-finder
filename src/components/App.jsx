@@ -43,14 +43,13 @@ export class App extends Component {
     const inputValue = e.target[1].value;
     let page = this.state.page;
     let quantityElements = this.state.quantityElements;
-    
+
     fetchData(inputValue, page, quantityElements).then(resp => {
       if (inputValue === '') {
         return null;
       }
       this.setState({ arrayOfImages: [...resp.data.hits] });
     });
-    
   };
   pagination = () => {
     let inputValue = this.state.inputValuee;
@@ -58,8 +57,10 @@ export class App extends Component {
     let quantityElements = this.state.quantityElements;
     fetchData(inputValue, page, quantityElements).then(resp => {
       this.setState({ quantityElements: this.state.quantityElements + 12 });
-      this.setState({ arrayOfImages: [...resp.data.hits]});
+      
+      this.setState({ arrayOfImages: [...resp.data.hits] });
     });
+    
   };
   modalOpen = e => {
     this.setState({
@@ -90,7 +91,7 @@ export class App extends Component {
           <ImageGalleryItem state={this.state} modalOpen={this.modalOpen} />
         </ImageGallery>
         {this.state.arrayOfImages.length === 0 ? null : (
-          <Button state={this.state} pagination={this.pagination}  />
+          <Button state={this.state} pagination={this.pagination} />
         )}
         <Loader loading={this.state.loading} />
         {!this.state.open ? null : (
