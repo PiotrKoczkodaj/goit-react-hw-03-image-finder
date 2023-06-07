@@ -5,15 +5,15 @@ import styles from './Modal.module.css';
 
 export class Modal extends Component {
   render() {
-    const { state } = this.props;
+    const { state,modalClose } = this.props;
     
     return (
      
       
-      <div className={styles.Overlay}>
+      <div onKeyDown={(e)=>{console.log(e)}} onClick={modalClose} className={styles.Overlay}>
         
           <div className={styles.Modal}>
-    <img src={state.imageSrcToModal} alt="dasdad" />
+    <img src={state.imageSrcToModal} alt={state.tagsImagetoModal} />
   </div>
   
 </div>

@@ -18,51 +18,61 @@ export class App extends Component {
     imageSrcToModal: '',
     tagsImageToModal: '',
   };
+
   componentDidMount() {
     setTimeout(() => {
       this.setState({ loading: false });
     }, 1000);
   }
+  componentWillUnmount() {
+    document.addEventListener('keyup', e => {
+      if (e.key === 'Escape') {
+        this.setState({ open: false });
+      }
+    });
+  }
+
+  settingInputValue = e => {
+    this.setState({ inputValuee: e.target.value });
+    this.setState(prevState => {
+      return { inputValuee: prevState.inputValuee };
+    });
+  };
+  handleSubmit = e => {
+    e.preventDefault();
+    const inputValue = e.target[1].value;
+    let page = this.state.page;
+    let quantityElements = this.state.quantityElements;
+    
+    fetchData(inputValue, page, quantityElements).then(resp => {
+      if (inputValue === '') {
+        return null;
+      }
+      this.setState({ arrayOfImages: [...resp.data.hits] });
+    });
+    
+  };
+  pagination = () => {
+    let inputValue = this.state.inputValuee;
+    let page = this.state.page;
+    let quantityElements = this.state.quantityElements;
+    fetchData(inputValue, page, quantityElements).then(resp => {
+      this.setState({ quantityElements: this.state.quantityElements + 12 });
+      this.setState({ arrayOfImages: [...resp.data.hits]});
+    });
+  };
+  modalOpen = e => {
+    this.setState({
+      imageSrcToModal: e.target.src,
+      tagsImageToModal: e.target.alt,
+      open: true,
+    });
+  };
+  modalClose = e => {
+    console.log(e);
+    this.setState({ open: false });
+  };
   render() {
-    const settingInputValue = e => {
-      this.setState({ inputValuee: e.target.value });
-      this.setState(prevState => {
-        console.log(prevState.inputValuee);
-        return { inputValuee: prevState.inputValuee };
-      });
-    };
-    const handleSubmit = e => {
-      e.preventDefault();
-      const inputValue = e.target[1].value;
-      let page = this.state.page;
-      let quantityElements = this.state.quantityElements;
-      fetchData(inputValue, page, quantityElements).then(resp => {
-        if (inputValue === '') {
-          return null
-        }
-        this.setState({ arrayOfImages: [...resp.data.hits] });
-        
-      });
-    };
-
-    const pagination = () => {
-      let inputValue = this.state.inputValuee;
-      let page = this.state.page;
-      let quantityElements = this.state.quantityElements;
-      fetchData(inputValue, page, quantityElements).then(resp => {
-        this.setState({ quantityElements: this.state.quantityElements + 12 });
-        this.setState({ arrayOfImages: [...resp.data.hits] });
-      });
-    };
-
-    const modalOpen = e => {
-      this.setState({
-        imageSrcToModal: e.target.src,
-        tagsImageToModal: e.target.alt,
-        open: true,
-      });
-    };
-
     return (
       <div
         style={{
@@ -72,16 +82,19 @@ export class App extends Component {
           paddingBottom: '24px',
         }}
       >
-        <Searchbar submit={handleSubmit} inputValue={settingInputValue} />
+        <Searchbar
+          submit={this.handleSubmit}
+          inputValue={this.settingInputValue}
+        />
         <ImageGallery>
-          <ImageGalleryItem state={this.state} modalOpen={modalOpen} />
+          <ImageGalleryItem state={this.state} modalOpen={this.modalOpen} />
         </ImageGallery>
         {this.state.arrayOfImages.length === 0 ? null : (
-          <Button state={this.state} pagination={pagination} />
+          <Button state={this.state} pagination={this.pagination}  />
         )}
         <Loader loading={this.state.loading} />
         {!this.state.open ? null : (
-          <Modal state={this.state} source={modalOpen} />
+          <Modal state={this.state} modalClose={this.modalClose} />
         )}
       </div>
     );
