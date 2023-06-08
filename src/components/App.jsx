@@ -6,18 +6,18 @@ import { Button } from './Button/Button';
 import { Loader } from './Loader/Loader';
 import { Modal } from './Modal/Modal';
 import { fetchData } from './Api';
+
 export class App extends Component {
   state = {
     arrayOfImages: [],
     page: 1,
     quantityElements: 12,
-    loading: false,
+    isLoading: false,
     inputValuee: '',
     open: false,
     imageSrcToModal: '',
     tagsImageToModal: '',
   };
-
   componentDidMount() {
     document.addEventListener('keydown', e => {
       if (e.key === 'Escape') {
@@ -25,7 +25,6 @@ export class App extends Component {
       }
     });
   }
-
   settingInputValue = e => {
     this.setState({ inputValuee: e.target.value });
     this.setState(prevState => {
@@ -37,9 +36,9 @@ export class App extends Component {
     const inputValue = e.target[1].value;
     let page = this.state.page;
     let quantityElements = this.state.quantityElements;
-    this.setState({ loading: true });
-     setTimeout(() => {
-      this.setState({ loading: false });
+    this.setState({ isLoading: true });
+    setTimeout(() => {
+      this.setState({ isLoading: false });
     }, 500);
     fetchData(inputValue, page, quantityElements).then(resp => {
       if (inputValue === '') {
@@ -47,13 +46,11 @@ export class App extends Component {
       }
       this.setState({ arrayOfImages: [...resp.data.hits] });
     });
-
   };
-
-  pagination = () => {
-    this.setState({ loading: true });
-     setTimeout(() => {
-      this.setState({ loading: false });
+  handlePagination = () => {
+    this.setState({ isLoading: true });
+    setTimeout(() => {
+      this.setState({ isLoading: false });
     }, 500);
     let inputValue = this.state.inputValuee;
     let page = this.state.page;
@@ -66,7 +63,6 @@ export class App extends Component {
       });
     });
   };
-
   modalOpen = e => {
     this.setState({
       imageSrcToModal: e.target.src,
@@ -74,9 +70,10 @@ export class App extends Component {
       open: true,
     });
   };
-  modalClose =() => {
+  modalClose = () => {
     this.setState({ open: false });
   };
+
   render() {
     return (
       <div
@@ -95,9 +92,9 @@ export class App extends Component {
           <ImageGalleryItem state={this.state} modalOpen={this.modalOpen} />
         </ImageGallery>
         {this.state.arrayOfImages.length === 0 ? null : (
-          <Button state={this.state} pagination={this.pagination} />
+          <Button pagination={this.handlePagination} />
         )}
-        <Loader loading={this.state.loading} />
+        <Loader isLoading={this.state.isLoading} />
         {!this.state.open ? null : (
           <Modal state={this.state} modalClose={this.modalClose} />
         )}

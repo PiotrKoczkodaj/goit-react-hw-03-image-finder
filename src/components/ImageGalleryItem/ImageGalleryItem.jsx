@@ -1,10 +1,10 @@
 import { Component } from 'react';
 import styles from './ImageGalleryItem.module.css';
+import PropTypes from 'prop-types';
 
 export class ImageGalleryItem extends Component {
   render() {
     const { state, modalOpen } = this.props;
-
     return (
       <>
         {state.arrayOfImages.map(image => (
@@ -20,3 +20,7 @@ export class ImageGalleryItem extends Component {
     );
   }
 }
+ImageGalleryItem.propTypes = {
+  state: PropTypes.object.isRequired,
+  modalOpen: PropTypes.func.isRequired,
+};
