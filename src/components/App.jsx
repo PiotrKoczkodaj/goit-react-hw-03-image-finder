@@ -6,7 +6,6 @@ import { Button } from './Button/Button';
 import { Loader } from './Loader/Loader';
 import { Modal } from './Modal/Modal';
 import { fetchData } from './Api';
-
 export class App extends Component {
   state = {
     arrayOfImages: [],
